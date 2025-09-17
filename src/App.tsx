@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { type TodoItem, TodoApiMock, TodoApiClient } from "./api";
 import './App.css'
+import { TodoApi } from './utils/todoApi';
 
 const INITIAL_TODO: TodoItem[] = [
   {id: 1, text: "todo-item-1", done: false},
@@ -8,7 +9,8 @@ const INITIAL_TODO: TodoItem[] = [
 ];
 
 // const todoApi = new TodoApiMock(INITIAL_TODO);
-const todoApi = new TodoApiClient('http://localhost:8080')
+// const todoApi = new TodoApiClient('http://localhost:8080')
+const todoApi = new TodoApi();
 
 type TodoListItemProps = {
   item: TodoItem;
@@ -156,7 +158,11 @@ export default function App(){
     )}
     <CreateTodoForm 
       onSubmit={async (text) => {
-        await todoApi.createItem(text);
+        if(!text){
+          alert('Todoを入力して下さい。')
+          return;
+        }
+        await todoApi.createItem({text, done: false});
         reloadTodoItems();
       }} 
     />
