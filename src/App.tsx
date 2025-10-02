@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { type TodoItem, TodoApiMock, TodoApiClient } from "./api";
+// import { type TodoItem, TodoApiMock, TodoApiClient } from "./api";
+import { type TodoItem } from "./api";
 import './App.css'
 import { TodoApi } from './utils/todoApi';
 
-const INITIAL_TODO: TodoItem[] = [
-  {id: 1, text: "todo-item-1", done: false},
-  {id: 2, text: "todo-item-2", done: true},
-];
+// const INITIAL_TODO: TodoItem[] = [
+//   {id: 1, text: "todo-item-1", done: false},
+//   {id: 2, text: "todo-item-2", done: true},
+// ];
 
 // const todoApi = new TodoApiMock(INITIAL_TODO);
 // const todoApi = new TodoApiClient('http://localhost:8080')
