@@ -5,12 +5,18 @@ const supabase = supabaseClient;
 
 export class TodoApi {
     async queryItems(keyword: string, includeDone: boolean): Promise<Todo[]>{
+        // 完了したものも含めるならin句に追加
+        const doneVals = [false];
+        if(includeDone){
+            doneVals.push(true);
+        }
+
         const { data, error } = await supabase
             .from('todos')
             .select('id, text, done')
             .like('text','%'+keyword+'%')
-            .eq('done', includeDone)
-            .order('id', { ascending: false })
+            .in('done', doneVals)
+            .order('id', { ascending: false });
 
         if (error) throw error;
         return data as Todo[];
