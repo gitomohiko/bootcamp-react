@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react'
-// import { type TodoItem, TodoApiMock, TodoApiClient } from "./api";
 import { type TodoItem } from "./api";
 import './App.css'
 import { TodoApi } from './utils/todoApi';
+import { TodoUtil } from './utils/TodoUtil';
 
-// const INITIAL_TODO: TodoItem[] = [
-//   {id: 1, text: "todo-item-1", done: false},
-//   {id: 2, text: "todo-item-2", done: true},
-// ];
-
-// const todoApi = new TodoApiMock(INITIAL_TODO);
-// const todoApi = new TodoApiClient('http://localhost:8080')
 const todoApi = new TodoApi();
 
 type TodoListItemProps = {
@@ -66,57 +59,20 @@ function ValueViewer({value}: ValueViewerProps){
   );
 }
 
-// const generateId = () => Date.now();
-
-// const useTodoState = () => {
-//   const [todoItems, setTodoItems] = useState(INITIAL_TODO);
-  
-//   const createItem = (text: string) => {
-//     setTodoItems([...todoItems, { id: generateId(), text, done: false}]);
-//   };
-//   const updateItem = (newItem: TodoItem) => {
-//     setTodoItems(
-//       todoItems.map((item) => (item.id === newItem.id ? newItem: item))
-//     );
-//   };
-//   const deleteItem = (id: number) => {
-//     if(!window.confirm('削除してもよろしいですか？')) return;
-//     setTodoItems(todoItems.filter((item) => item.id !== id));
-//   };
-//   return [todoItems, createItem, updateItem, deleteItem] as const;
-// };
-
 export default function App(){
-//  const [todoItems, createItem, updateItem, deleteItem] = useTodoState();
  const [todoItems, setTodoItems] = useState<TodoItem[] | null>(null);
  const [keyword, setKeyword] = useState("");
  const [showingDone, setShowingDone] = useState(false);
   
-//  const reloadTodoItems = async (val?: string|boolean) => {
  const reloadTodoItems = async () => {
-  //  if (typeof val === "string") {
-  //     console.log('now keyword = ', keyword);
-  //     console.log('next keyword = ', val);
-  //    setKeyword(val);
-  //     console.log('after keyword = ', keyword);
-  //  } else if (typeof val === "boolean") {
-  //     console.log('now showingDone = ', showingDone);
-  //     console.log('next showingDone = ', val);
-  //    setShowingDone(val);
-  //     console.log('after showingDone = ', showingDone);
-  //  }
-   setTodoItems(await todoApi.queryItems(keyword, showingDone));
+   setTodoItems(TodoUtil.filterTodoItems(await todoApi.selectAll(), keyword, showingDone));
+  //  setTodoItems(await todoApi.queryItems(keyword, showingDone));
  };
  
  useEffect(() => {
   reloadTodoItems();
  }, [keyword, showingDone]);
  
-//  const filteredTodoItems = todoItems.filter((item) => {
-//   if (!showingDone && item.done) return false;
-//   return item.text.includes(keyword);
-//  });
-
  return (
   <div className='App'>
     <h1>ToDo</h1>

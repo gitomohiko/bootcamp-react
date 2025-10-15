@@ -4,6 +4,16 @@ import type { Todo } from '../types/Todo.ts';
 const supabase = supabaseClient;
 
 export class TodoApi {
+    async selectAll(): Promise<Todo[]>{
+
+        const { data, error } = await supabase
+            .from('todos')
+            .select('id, text, done')
+            .order('id', { ascending: false });
+
+        if (error) throw error;
+        return data as Todo[];
+    }
     async queryItems(keyword: string, includeDone: boolean): Promise<Todo[]>{
         // 完了したものも含めるならin句に追加
         const doneVals = [false];
