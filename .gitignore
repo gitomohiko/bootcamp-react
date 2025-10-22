@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+
+# Testing/Coverage reports
+/coverage

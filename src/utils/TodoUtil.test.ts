@@ -1,7 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { TodoUtil } from './TodoUtil';
 
-
 const todoItems = [
     {id: 1, text: '昼寝', done: false},
     {id: 2, text: '二度寝', done: true},
